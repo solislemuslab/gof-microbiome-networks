@@ -1,0 +1,10 @@
+,Akkermansia,Barnesiella,Blautia,Clostridium_difficile,Coprobacillus,Enterobacteriaceae,Enterococcus,Lachnospiraceae,Mollicutes
+Akkermansia,0,0,0,0,0,0,0,0,0
+Barnesiella,0,0,-2,-1,0,0,-2,0,0
+Blautia,0,0,0,0,0,0,1,0,0
+Clostridium_difficile,0,0,2,0,0,0,1,0,0
+Coprobacillus,1,0,-11,0,0,0,0,0,0
+Enterobacteriaceae,0,0,2,0,0,0,1,0,0
+Enterococcus,0,0,1,0,0,0,0,0,0
+Lachnospiraceae,0,1,-2,-2,0,0,-2,0,0
+Mollicutes,0,0,2,0,0,0,1,0,0
