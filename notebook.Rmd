@@ -1,0 +1,150 @@
+# Goodness of fit of networks models to microbiome
+
+## Required packages
+
+### NetCoMi
+
+```{r}
+
+install.packages("devtools")
+install.packages("BiocManager")
+devtools::install_github("zdk123/pulsar")
+
+# Since two of NetCoMi's dependencies are only available on GitHub, 
+# it is recommended to install them first:
+devtools::install_github("zdk123/SpiecEasi")
+options(timeout = 600)
+devtools::install_github("GraceYoon/SPRING")
+
+# Install NetCoMi
+devtools::install_github("stefpeschel/NetCoMi", 
+                         repos = c("https://cloud.r-project.org/",
+                                   BiocManager::repositories()))
+```
+
+### ggNetView
+
+```{r}
+
+# install.packages("devtools")
+devtools::install_github("Jiawang1209/ggNetView")
+```
+
+## Reading network and counting nodes and edges 
+
+### Network 1: Steinway et al 2015
+
+We read a network from a research paper where the data is given as an adjacency matrix, where rows and columns are microbial taxa. Non-zero values indicate interactions between taxa.
+
+Link to data: https://bitbucket.org/gutmicrobiomepaper/microbiomenetworkmodelpaper/src/master/Metabolic_and_Experimental_Data/
+
+Downloaded paths_in_boolean_net.txt and changed name to network_matrix.csv
+
+Convert the matrix into a binary network (edge exists or not).
+We then create a directed graph to obtain basic properties like the number of nodes and edges.
+
+```{r}
+# Load package
+library(igraph)
+
+# Read the network matrix
+mat <- as.matrix(read.csv("data/01-steinway/network_matrix.csv", row.names = 1))
+
+# Look at the matrix to check it loaded correctly
+mat
+
+# Make a copy of the matrix
+mat_binary <- mat
+
+# Convert all non-zero values to 1
+# Keep only where an edge exists
+mat_binary[mat_binary != 0] <- 1
+
+# Create the network
+g <- graph_from_adjacency_matrix(mat_binary, mode = "directed")
+
+# Count nodes
+vcount(g)
+
+# Count edges
+ecount(g)
+
+plot(g)
+```
+
+## Compute Degree Distribution
+
+Degree measures how many connections each taxon has. This is one of the main features we will compare between microbiome networks and the simulated network models.
+
+```{r}
+# Compute degree
+deg <- degree(g)
+deg
+
+summary(deg)
+
+# Plot degree distribution
+hist(deg, main = "Degree distribution", xlab = "Degree")
+```
+
+## Compute Clustering Coefficient
+
+The clustering coefficient measures how connected neighboring taxa are to each other. This helps identify whether the microbiome network contains groups or clusters of highly connected taxa.
+
+```{r}
+# Compute clustering coefficient
+clustering <- transitivity(g, type = "local", isolates = "zero")
+
+clustering
+
+summary(clustering)
+
+# Plot clustering coefficient distribution
+hist(clustering,
+     main = "Clustering coefficient distribution",
+     xlab = "Clustering coefficient",
+     ylab = "Number of nodes")
+```
+
+## Compare with a model network
+
+We will generate a random network (Erdos-Renyi) and compare it to the microbiome network above.
+
+```{r}
+# Generate an Erdos-Renyi network with the same number of nodes and edges
+# Erdos-Renyi model network
+g_er <- sample_gnm(vcount(g), ecount(g), directed = TRUE)
+
+# Compute degree for the model network
+deg_er <- degree(g_er)
+
+# Compare distributions
+hist(deg, col = "cyan",
+     main = "Degree Comparison",
+     xlab = "Degree",
+     ylab = "Number of nodes")
+
+hist(deg_er, col = "purple", add = TRUE)
+```
+
+```{r}
+# Compute clustering coefficient for the model network
+clustering_er <- transitivity(g_er,
+                              type = "local",
+                              isolates = "zero")
+
+clustering_er
+
+summary(clustering_er)
+
+# Compare clustering coefficient distributions
+hist(clustering,
+     col = "cyan",
+     main = "Clustering Coefficient Comparison",
+     xlab = "Clustering coefficient",
+     ylab = "Number of nodes")
+
+hist(clustering_er,
+     col = "purple",
+     add = TRUE)
+```
