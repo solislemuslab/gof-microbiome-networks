@@ -5,7 +5,6 @@
 ### NetCoMi
 
 ```{r}
-
 install.packages("devtools")
 install.packages("BiocManager")
 devtools::install_github("zdk123/pulsar")
@@ -25,14 +24,13 @@ devtools::install_github("stefpeschel/NetCoMi",
 ### ggNetView
 
 ```{r}
-
 # install.packages("devtools")
 devtools::install_github("Jiawang1209/ggNetView")
 ```
 
 ## Reading network and counting nodes and edges 
 
-### Network 1: Steinway et al 2015
+### Network 1: Steinway et al. 2015
 
 We read a network from a research paper where the data is given as an adjacency matrix, where rows and columns are microbial taxa. Non-zero values indicate interactions between taxa.
 
@@ -44,7 +42,6 @@ Convert the matrix into a binary network (edge exists or not).
 We then create a directed graph to obtain basic properties like the number of nodes and edges.
 
 ```{r}
-# Load package
 library(igraph)
 
 # Read the network matrix
@@ -69,7 +66,102 @@ vcount(g)
 # Count edges
 ecount(g)
 
+# Plot network
 plot(g)
+```
+
+### Network 2: Hall et al. 2019
+
+Link to data: https://www.ncbi.nlm.nih.gov/sra/PRJNA577760
+
+```{r}
+
+```
+
+### Network 3: Liu et al. 2023
+
+Link to data: https://github.com/YimengLiu9425/code/blob/master/study_code_Python/OTU%20table.xlsx
+
+```{r}
+
+```
+
+### Network 4: Beghini et al. 2024
+
+Link to data: https://github.com/human-nature-lab/strain_sharing/tree/main/data
+
+```{r}
+
+```
+
+### Network 5: Hernandez et al. 2025
+
+We read a microbial association network from a research paper where the data is provided as an edge list. Each row represents an association between two microbial taxa, along with the strength of that association.
+
+Link to data: https://github.com/clayton-lab/marm_microbiome_metabolome_manuscript/blob/main/results/node_properties/associations.tsv
+
+The edge list is converted directly into an undirected graph. We then obtain basic network properties such as the number of nodes and edges.
+
+```{r}
+library(igraph)
+
+# Read the edge list
+edges <- read.delim(
+  "data/05-hernandez/associations.tsv"
+)
+
+# Look at the first few associations
+head(edges)
+
+# Create the network from the edge list
+# X_features and Y_features are the connected taxa
+# association is stored as an edge weight
+g <- graph_from_data_frame(
+  d = edges[, c("X_features",
+                "Y_features",
+                "association")],
+  directed = FALSE
+)
+
+# Count nodes
+vcount(g)
+
+# Count edges
+ecount(g)
+
+# Plot network
+plot(g)
+```
+
+### Network 18: Ruiz-Perez et al. 2021
+
+We read a network from a research paper where the data is given in GraphML format. The network contains microbial taxa, genes, metabolites, and host features as nodes. Edges represent inferred relationships from a Dynamic Bayesian Network.
+
+For this first analysis, we keep only the microbial taxa nodes so that this network is more comparable to the other microbiome networks in the project.
+
+Link to data: https://github.com/DaniRuizPerez/PALM-Public-Respository/blob/master/Networks/HEGTM/3Parents/human_ibd_microbiota_genes_metabolites_dbn_sample_alignment_sr14d_top100x100_host_taxa_reference_dbnIntraBoot.graphml
+
+Downloaded human_ibd_microbiota_genes_metabolites_dbn_sample_alignment_sr14d_top100x100_host_taxa_reference_dbnIntraBoot.graphml and changed name to network.graphml
+
+```{r}
+library(igraph)
+
+# Read GraphML network
+net <- read_graph("data/18-ruiz-perez/network.graphml",
+                 format = "graphml")
+vcount(net)
+ecount(net)
+# Count nodes
+vcount(net)
+
+# Count edges
+ecount(net)
+
+# Plot network
+plot(net)
+
+# TODO: Keep only microbial taxa nodes
+# TODO: Create microbiome-only network
 ```
 
 ## Compute Degree Distribution
