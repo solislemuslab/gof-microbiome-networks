@@ -58,16 +58,16 @@ mat_binary <- mat
 mat_binary[mat_binary != 0] <- 1
 
 # Create the network
-g <- graph_from_adjacency_matrix(mat_binary, mode = "directed")
+g_steinway <- graph_from_adjacency_matrix(mat_binary, mode = "directed")
 
 # Count nodes
-vcount(g)
+vcount(g_steinway)
 
 # Count edges
-ecount(g)
+ecount(g_steinway)
 
 # Plot network
-plot(g)
+plot(g_steinway)
 ```
 
 ### Network 2: Hall et al. 2019
@@ -106,9 +106,7 @@ The edge list is converted directly into an undirected graph. We then obtain bas
 library(igraph)
 
 # Read the edge list
-edges <- read.delim(
-  "data/05-hernandez/associations.tsv"
-)
+edges <- read.delim("data/05-hernandez/associations.tsv")
 
 # Look at the first few associations
 head(edges)
@@ -116,7 +114,7 @@ head(edges)
 # Create the network from the edge list
 # X_features and Y_features are the connected taxa
 # association is stored as an edge weight
-g <- graph_from_data_frame(
+g_hernandez <- graph_from_data_frame(
   d = edges[, c("X_features",
                 "Y_features",
                 "association")],
@@ -124,13 +122,173 @@ g <- graph_from_data_frame(
 )
 
 # Count nodes
-vcount(g)
+vcount(g_hernandez)
 
 # Count edges
-ecount(g)
+ecount(g_hernandez)
 
 # Plot network
-plot(g)
+plot(g_hernandez)
+```
+
+### Network 6: Lacruz-Pleguezuelos et al. 2026
+
+We read a microbial association network from the MHOmicrobiome GitHub repository, where the data is provided as an edge list. Each row represents an association between two microbial taxa, along with the strength of that association.
+
+Link to data: https://github.com/blacruz17/MHOmicrobiome/blob/main/data/edgeweights_mhno.csv
+
+The edge list is converted directly into an undirected graph. We then obtain basic network properties such as the number of nodes and edges.
+
+```{r}
+library(igraph)
+
+# Read the edge list
+edges_lacruz_pleguezuelos1 <- read.csv("data/06-lacruz-pleguezuelos/edgeweights_mhno.csv" )
+
+# Look at the first few associations
+head(edges_lacruz_pleguezuelos1)
+
+# Create the network from the edge list
+# v1 and v2 are the connected taxa
+# edgeweight is stored as an edge weight
+g_lacruz_pleguezuelos1 <- graph_from_data_frame( d = edges_lacruz_pleguezuelos1[, c("v1", "v2", "edgeweight")], directed = FALSE )
+
+# Count nodes
+vcount(g_lacruz_pleguezuelos1)
+
+# Count edges
+ecount(g_lacruz_pleguezuelos1)
+
+# Plot network
+plot(g_lacruz_pleguezuelos1)
+```
+
+### Network 7: Lacruz-Pleguezuelos et al. 2026
+
+We read a microbial association network from the MHOmicrobiome GitHub repository, where the data is provided as an edge list. Each row represents an association between two microbial taxa, along with the strength of that association.
+
+Link to data: https://github.com/blacruz17/MHOmicrobiome/blob/main/data/edgeweights_muno.csv
+
+The edge list is converted directly into an undirected graph. We then obtain basic network properties such as the number of nodes and edges.
+
+```{r}
+library(igraph)
+
+# Read the edge list
+edges_lacruz_pleguezuelos2 <- read.csv("data/07-lacruz-pleguezuelos/edgeweights_muno.csv" )
+
+# Look at the first few associations
+head(edges_lacruz_pleguezuelos2)
+
+# Create the network from the edge list
+# v1 and v2 are the connected taxa
+# edgeweight is stored as an edge weight
+g_lacruz_pleguezuelos2 <- graph_from_data_frame( d = edges_lacruz_pleguezuelos2[, c("v1", "v2", "edgeweight")], directed = FALSE )
+
+# Count nodes
+vcount(g_lacruz_pleguezuelos2)
+
+# Count edges
+ecount(g_lacruz_pleguezuelos2)
+
+# Plot network
+plot(g_lacruz_pleguezuelos2)
+```
+
+### Network 8: Lacruz-Pleguezuelos et al. 2026
+
+We read a microbial association network from the MHOmicrobiome GitHub repository, where the data is provided as an edge list. Each row represents an association between two microbial taxa, along with the strength of that association.
+
+Link to data: https://github.com/blacruz17/MHOmicrobiome/blob/main/data/edgeweights_muo.csv
+
+The edge list is converted directly into an undirected graph. We then obtain basic network properties such as the number of nodes and edges.
+
+```{r}
+library(igraph)
+
+# Read the edge list
+edges_lacruz_pleguezuelos3 <- read.csv("data/08-lacruz-pleguezuelos/edgeweights_muo.csv" )
+
+# Look at the first few associations
+head(edges_lacruz_pleguezuelos3)
+
+# Create the network from the edge list
+# v1 and v2 are the connected taxa
+# edgeweight is stored as an edge weight
+g_lacruz_pleguezuelos3 <- graph_from_data_frame( d = edges_lacruz_pleguezuelos3[, c("v1", "v2", "edgeweight")], directed = FALSE )
+
+# Count nodes
+vcount(g_lacruz_pleguezuelos3)
+
+# Count edges
+ecount(g_lacruz_pleguezuelos3)
+
+# Plot network
+plot(g_lacruz_pleguezuelos3)
+```
+
+### Network 9: Lacruz-Pleguezuelos et al. 2026
+
+We read a microbial association network from the MHOmicrobiome GitHub repository, where the data is provided as an edge list. Each row represents an association between two microbial taxa, along with the strength of that association.
+
+Link to data: https://github.com/blacruz17/MHOmicrobiome/blob/main/data/edgeweights_v1.csv
+
+The edge list is converted directly into an undirected graph. We then obtain basic network properties such as the number of nodes and edges.
+
+```{r}
+library(igraph)
+
+# Read the edge list
+edges_lacruz_pleguezuelos4 <- read.csv("data/09-lacruz-pleguezuelos/edgeweights_v1.csv" )
+
+# Look at the first few associations
+head(edges_lacruz_pleguezuelos4)
+
+# Create the network from the edge list
+# v1 and v2 are the connected taxa
+# edgeweight is stored as an edge weight
+g_lacruz_pleguezuelos4 <- graph_from_data_frame( d = edges_lacruz_pleguezuelos4[, c("v1", "v2", "edgeweight")], directed = FALSE )
+
+# Count nodes
+vcount(g_lacruz_pleguezuelos4)
+
+# Count edges
+ecount(g_lacruz_pleguezuelos4)
+
+# Plot network
+plot(g_lacruz_pleguezuelos4)
+```
+
+### Network 10: Lacruz-Pleguezuelos et al. 2026
+
+We read a microbial association network from the MHOmicrobiome GitHub repository, where the data is provided as an edge list. Each row represents an association between two microbial taxa, along with the strength of that association.
+
+Link to data: https://github.com/blacruz17/MHOmicrobiome/blob/main/data/edgeweights_v3.csv
+
+The edge list is converted directly into an undirected graph. We then obtain basic network properties such as the number of nodes and edges.
+
+```{r}
+library(igraph)
+
+# Read the edge list
+edges_lacruz_pleguezuelos5 <- read.csv("data/10-lacruz-pleguezuelos/edgeweights_v3.csv" )
+
+# Look at the first few associations
+head(edges_lacruz_pleguezuelos5)
+
+# Create the network from the edge list
+# v1 and v2 are the connected taxa
+# edgeweight is stored as an edge weight
+g_lacruz_pleguezuelos5 <- graph_from_data_frame( d = edges_lacruz_pleguezuelos5[, c("v1", "v2", "edgeweight")], directed = FALSE )
+
+# Count nodes
+vcount(g_lacruz_pleguezuelos5)
+
+# Count edges
+ecount(g_lacruz_pleguezuelos5)
+
+# Plot network
+plot(g_lacruz_pleguezuelos5)
 ```
 
 ### Network 18: Ruiz-Perez et al. 2021
@@ -147,18 +305,18 @@ Downloaded human_ibd_microbiota_genes_metabolites_dbn_sample_alignment_sr14d_top
 library(igraph)
 
 # Read GraphML network
-net <- read_graph("data/18-ruiz-perez/network.graphml",
+net_ruiz_perez <- read_graph("data/18-ruiz-perez/network.graphml",
                  format = "graphml")
-vcount(net)
-ecount(net)
+vcount(net_ruiz_perez)
+ecount(net_ruiz_perez)
 # Count nodes
-vcount(net)
+vcount(net_ruiz_perez)
 
 # Count edges
-ecount(net)
+ecount(net_ruiz_perez)
 
 # Plot network
-plot(net)
+plot(net_ruiz_perez)
 
 # TODO: Keep only microbial taxa nodes
 # TODO: Create microbiome-only network
