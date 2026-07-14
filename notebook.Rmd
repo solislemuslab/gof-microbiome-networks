@@ -291,6 +291,28 @@ ecount(g_lacruz_pleguezuelos5)
 plot(g_lacruz_pleguezuelos5)
 ```
 
+### Network 15: Lugo-Martinez et al. 2019
+
+Link to data: https://github.com/jlugomar/longitudinal_microbiome_analysis_public/blob/master/visualization/infant_gut_microbiota_dbn_sample_alignment_filtered_sr3d_dbnIntraBoot_noPeriodOfStudy.graphml
+
+```{r}
+library(igraph)
+
+# Read GraphML network
+net_lugo_martinez <- read_graph("data/15-lugo-martinez/infant_gut_microbiota_dbn_sample_alignment_filtered_sr3d_dbnIntraBoot_noPeriodOfStudy.graphml",
+                 format = "graphml")
+vcount(net_lugo_martinez)
+ecount(net_lugo_martinez)
+# Count nodes
+vcount(net_lugo_martinez)
+
+# Count edges
+ecount(net_lugo_martinez)
+
+# Plot network
+plot(net_lugo_martinez)
+```
+
 ### Network 18: Ruiz-Perez et al. 2021
 
 We read a network from a research paper where the data is given in GraphML format. The network contains microbial taxa, genes, metabolites, and host features as nodes. Edges represent inferred relationships from a Dynamic Bayesian Network.
