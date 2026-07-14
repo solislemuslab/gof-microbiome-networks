@@ -293,7 +293,11 @@ plot(g_lacruz_pleguezuelos5)
 
 ### Network 15: Lugo-Martinez et al. 2019
 
+We read an infant gut microbiome network from a research paper where the data is given in GraphML format. The network was generated from longitudinal microbiome data using a dynamic Bayesian network approach.
+
 Link to data: https://github.com/jlugomar/longitudinal_microbiome_analysis_public/blob/master/visualization/infant_gut_microbiota_dbn_sample_alignment_filtered_sr3d_dbnIntraBoot_noPeriodOfStudy.graphml
+
+The GraphML file is read directly into R as an `igraph` object. We then obtain basic network properties such as the number of nodes and edges.
 
 ```{r}
 library(igraph)
@@ -317,17 +321,15 @@ plot(net_lugo_martinez)
 
 We read a network from a research paper where the data is given in GraphML format. The network contains microbial taxa, genes, metabolites, and host features as nodes. Edges represent inferred relationships from a Dynamic Bayesian Network.
 
-For this first analysis, we keep only the microbial taxa nodes so that this network is more comparable to the other microbiome networks in the project.
-
 Link to data: https://github.com/DaniRuizPerez/PALM-Public-Respository/blob/master/Networks/HEGTM/3Parents/human_ibd_microbiota_genes_metabolites_dbn_sample_alignment_sr14d_top100x100_host_taxa_reference_dbnIntraBoot.graphml
 
-Downloaded human_ibd_microbiota_genes_metabolites_dbn_sample_alignment_sr14d_top100x100_host_taxa_reference_dbnIntraBoot.graphml and changed name to network.graphml
+For this first analysis, we keep only the microbial taxa nodes so that this network is more comparable to the other microbiome networks in the project.
 
 ```{r}
 library(igraph)
 
 # Read GraphML network
-net_ruiz_perez <- read_graph("data/18-ruiz-perez/network.graphml",
+net_ruiz_perez <- read_graph("data/18-ruiz-perez/human_ibd_microbiota_genes_metabolites_dbn_sample_alignment_sr14d_top100x100_host_taxa_reference_dbnIntraBoot.graphml",
                  format = "graphml")
 vcount(net_ruiz_perez)
 ecount(net_ruiz_perez)
