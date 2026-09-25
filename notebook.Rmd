@@ -7,6 +7,7 @@
 ```{r}
 install.packages("devtools")
 install.packages("BiocManager")
+install.packages("rgexf")
 devtools::install_github("zdk123/pulsar")
 
 # Since two of NetCoMi's dependencies are only available on GitHub, 
@@ -46,9 +47,6 @@ library(igraph)
 
 # Read the network matrix
 mat <- as.matrix(read.csv("data/01-steinway/network_matrix.csv", row.names = 1))
-
-# Look at the matrix to check it loaded correctly
-mat
 
 # Make a copy of the matrix
 mat_binary <- mat
@@ -114,12 +112,7 @@ head(edges)
 # Create the network from the edge list
 # X_features and Y_features are the connected taxa
 # association is stored as an edge weight
-g_hernandez <- graph_from_data_frame(
-  d = edges[, c("X_features",
-                "Y_features",
-                "association")],
-  directed = FALSE
-)
+g_hernandez <- graph_from_data_frame(d = edges[, c("X_features", "Y_features", "association")], directed = FALSE)
 
 # Count nodes
 vcount(g_hernandez)
@@ -143,7 +136,7 @@ The edge list is converted directly into an undirected graph. We then obtain bas
 library(igraph)
 
 # Read the edge list
-edges_lacruz_pleguezuelos1 <- read.csv("data/06-lacruz-pleguezuelos/edgeweights_mhno.csv" )
+edges_lacruz_pleguezuelos1 <- read.csv("data/06-lacruz-pleguezuelos/edgeweights_mhno.csv")
 
 # Look at the first few associations
 head(edges_lacruz_pleguezuelos1)
@@ -151,7 +144,7 @@ head(edges_lacruz_pleguezuelos1)
 # Create the network from the edge list
 # v1 and v2 are the connected taxa
 # edgeweight is stored as an edge weight
-g_lacruz_pleguezuelos1 <- graph_from_data_frame( d = edges_lacruz_pleguezuelos1[, c("v1", "v2", "edgeweight")], directed = FALSE )
+g_lacruz_pleguezuelos1 <- graph_from_data_frame(d = edges_lacruz_pleguezuelos1[, c("v1", "v2", "edgeweight")], directed = FALSE)
 
 # Count nodes
 vcount(g_lacruz_pleguezuelos1)
@@ -175,7 +168,7 @@ The edge list is converted directly into an undirected graph. We then obtain bas
 library(igraph)
 
 # Read the edge list
-edges_lacruz_pleguezuelos2 <- read.csv("data/07-lacruz-pleguezuelos/edgeweights_muno.csv" )
+edges_lacruz_pleguezuelos2 <- read.csv("data/07-lacruz-pleguezuelos/edgeweights_muno.csv")
 
 # Look at the first few associations
 head(edges_lacruz_pleguezuelos2)
@@ -183,7 +176,7 @@ head(edges_lacruz_pleguezuelos2)
 # Create the network from the edge list
 # v1 and v2 are the connected taxa
 # edgeweight is stored as an edge weight
-g_lacruz_pleguezuelos2 <- graph_from_data_frame( d = edges_lacruz_pleguezuelos2[, c("v1", "v2", "edgeweight")], directed = FALSE )
+g_lacruz_pleguezuelos2 <- graph_from_data_frame(d = edges_lacruz_pleguezuelos2[, c("v1", "v2", "edgeweight")], directed = FALSE)
 
 # Count nodes
 vcount(g_lacruz_pleguezuelos2)
@@ -207,7 +200,7 @@ The edge list is converted directly into an undirected graph. We then obtain bas
 library(igraph)
 
 # Read the edge list
-edges_lacruz_pleguezuelos3 <- read.csv("data/08-lacruz-pleguezuelos/edgeweights_muo.csv" )
+edges_lacruz_pleguezuelos3 <- read.csv("data/08-lacruz-pleguezuelos/edgeweights_muo.csv")
 
 # Look at the first few associations
 head(edges_lacruz_pleguezuelos3)
@@ -215,7 +208,7 @@ head(edges_lacruz_pleguezuelos3)
 # Create the network from the edge list
 # v1 and v2 are the connected taxa
 # edgeweight is stored as an edge weight
-g_lacruz_pleguezuelos3 <- graph_from_data_frame( d = edges_lacruz_pleguezuelos3[, c("v1", "v2", "edgeweight")], directed = FALSE )
+g_lacruz_pleguezuelos3 <- graph_from_data_frame(d = edges_lacruz_pleguezuelos3[, c("v1", "v2", "edgeweight")], directed = FALSE)
 
 # Count nodes
 vcount(g_lacruz_pleguezuelos3)
@@ -239,7 +232,7 @@ The edge list is converted directly into an undirected graph. We then obtain bas
 library(igraph)
 
 # Read the edge list
-edges_lacruz_pleguezuelos4 <- read.csv("data/09-lacruz-pleguezuelos/edgeweights_v1.csv" )
+edges_lacruz_pleguezuelos4 <- read.csv("data/09-lacruz-pleguezuelos/edgeweights_v1.csv")
 
 # Look at the first few associations
 head(edges_lacruz_pleguezuelos4)
@@ -247,7 +240,7 @@ head(edges_lacruz_pleguezuelos4)
 # Create the network from the edge list
 # v1 and v2 are the connected taxa
 # edgeweight is stored as an edge weight
-g_lacruz_pleguezuelos4 <- graph_from_data_frame( d = edges_lacruz_pleguezuelos4[, c("v1", "v2", "edgeweight")], directed = FALSE )
+g_lacruz_pleguezuelos4 <- graph_from_data_frame(d = edges_lacruz_pleguezuelos4[, c("v1", "v2", "edgeweight")], directed = FALSE)
 
 # Count nodes
 vcount(g_lacruz_pleguezuelos4)
@@ -271,15 +264,12 @@ The edge list is converted directly into an undirected graph. We then obtain bas
 library(igraph)
 
 # Read the edge list
-edges_lacruz_pleguezuelos5 <- read.csv("data/10-lacruz-pleguezuelos/edgeweights_v3.csv" )
-
-# Look at the first few associations
-head(edges_lacruz_pleguezuelos5)
+edges_lacruz_pleguezuelos5 <- read.csv("data/10-lacruz-pleguezuelos/edgeweights_v3.csv")
 
 # Create the network from the edge list
 # v1 and v2 are the connected taxa
 # edgeweight is stored as an edge weight
-g_lacruz_pleguezuelos5 <- graph_from_data_frame( d = edges_lacruz_pleguezuelos5[, c("v1", "v2", "edgeweight")], directed = FALSE )
+g_lacruz_pleguezuelos5 <- graph_from_data_frame(d = edges_lacruz_pleguezuelos5[, c("v1", "v2", "edgeweight")], directed = FALSE)
 
 # Count nodes
 vcount(g_lacruz_pleguezuelos5)
@@ -289,6 +279,107 @@ ecount(g_lacruz_pleguezuelos5)
 
 # Plot network
 plot(g_lacruz_pleguezuelos5)
+```
+
+### Network 11: Jeong et al. 2023
+
+The original data was downloaded as a journal table CSV file. Because the journal table used merged-cells, the raw CSV files were cleaned into standard edge lists before being read into R. The cleaned edge list is then converted into an undirected graph. We then obtain the number of nodes and edges.
+
+Link to data: https://www.tandfonline.com/doi/figure/10.1080/20002297.2023.2186591?scroll=top&needAccess=true
+
+This table represents the compositional network between bacterial genera within the S type oral microbiome.
+
+```{r}
+library(igraph)
+
+# Read the cleaned edge list
+edges_jeong_s_type <- read.csv("data/11-jeong/jeong_s_type_edges.csv")
+
+# Look at the first few associations
+head(edges_jeong_s_type)
+
+# Create the network from the edge list
+# Source and target are the connected bacterial genera
+# Weight is the SparCC R-value
+# Sign indicates whether the association is positive or negative
+g_jeong_s_type <- graph_from_data_frame(d = edges_jeong_s_type[, c("source", "target", "weight", "sign")], directed = FALSE)
+
+# Count nodes
+vcount(g_jeong_s_type)
+
+# Count edges
+ecount(g_jeong_s_type)
+
+# Plot network
+plot(g_jeong_s_type)
+```
+
+### Network 12: Jeong et al. 2023
+
+The original data was downloaded as a journal table CSV file. Because the journal table used merged-cells, the raw CSV files were cleaned into standard edge lists before being read into R. The cleaned edge list is converted into an undirected graph. We then obtain the number of nodes and edges.
+
+Link to data: https://www.tandfonline.com/doi/figure/10.1080/20002297.2023.2186591?scroll=top&needAccess=true
+
+This table represents the compositional network between bacterial genera within the S type oral microbiome.
+
+```{r}
+library(igraph)
+
+# Read the cleaned edge list
+edges_jeong_h_type <- read.csv("data/12-jeong/jeong_h_type_edges.csv")
+
+# Look at the first few associations
+head(edges_jeong_h_type)
+
+# Create the network from the edge list
+# Source and target are the connected bacterial genera
+# Weight is the SparCC R-value
+# Sign indicates whether the association is positive or negative
+g_jeong_h_type <- graph_from_data_frame(d = edges_jeong_h_type[,c("source","target", "weight", "sign")], directed = FALSE)
+
+# Count nodes
+vcount(g_jeong_h_type)
+
+# Count edges
+ecount(g_jeong_h_type)
+
+# Plot network
+plot(g_jeong_h_type)
+```
+
+### Network 13: Goyal et al. 2021
+
+We read a human gut microbiome cross-feeding network from a research paper. The network connects microbial species and metabolites, where interactions represent metabolite consumption, production, or both. The original network was based on experimentally verified and manually curated gut microbiome interactions.
+
+Link to data: https://github.com/maslov-group/ML_human_gut/blob/master/data/pruned_chia_network.csv
+
+The CSV file is read into R as an edge list and converted into an undirected igraph object. We then obtain basic network properties such as the number of nodes and edges.
+
+```{r}
+library(igraph)
+
+# Read cross-feeding edge list
+net_goyal_data <- read.csv("data/13-goyal/pruned_chia_network.csv")
+
+# Rename columns
+names(net_goyal_data) <- c("metabolite_id", "microbe_id", "edge_type")
+
+# Add prefixes so metabolite and microbe nodes are clearly distinct
+net_goyal_data$metabolite_id <- paste0("metabolite_", net_goyal_data$metabolite_id)
+
+net_goyal_data$microbe_id <- paste0("microbe_",nnet_goyal_data$microbe_id)
+
+# Convert edge list into an undirected igraph object
+net_goyal <- graph_from_data_frame(net_goyal_data, directed = FALSE)
+
+# Count nodes
+vcount(net_goyal)
+
+# Count edges
+ecount(net_goyal)
+
+# Plot network
+plot(net_goyal)
 ```
 
 ### Network 15: Lugo-Martinez et al. 2019
@@ -304,9 +395,8 @@ library(igraph)
 
 # Read GraphML network
 net_lugo_martinez <- read_graph("data/15-lugo-martinez/infant_gut_microbiota_dbn_sample_alignment_filtered_sr3d_dbnIntraBoot_noPeriodOfStudy.graphml",
-                 format = "graphml")
-vcount(net_lugo_martinez)
-ecount(net_lugo_martinez)
+                                format = "graphml")
+
 # Count nodes
 vcount(net_lugo_martinez)
 
@@ -316,6 +406,13 @@ ecount(net_lugo_martinez)
 # Plot network
 plot(net_lugo_martinez)
 ```
+
+### Network 17: Melnyk et al. 2020
+
+```{r}
+
+```
+
 
 ### Network 18: Ruiz-Perez et al. 2021
 
@@ -330,20 +427,234 @@ library(igraph)
 
 # Read GraphML network
 net_ruiz_perez <- read_graph("data/18-ruiz-perez/human_ibd_microbiota_genes_metabolites_dbn_sample_alignment_sr14d_top100x100_host_taxa_reference_dbnIntraBoot.graphml",
-                 format = "graphml")
-vcount(net_ruiz_perez)
-ecount(net_ruiz_perez)
+                             format = "graphml")
+
+# Keep only microbial taxa nodes
+taxa_nodes <- V(net_ruiz_perez)[grepl("^s__", V(net_ruiz_perez)$id)]
+
+# Create microbiome-only network
+net_ruiz_perez_taxa <- induced_subgraph(net_ruiz_perez, vids = taxa_nodes)
+
 # Count nodes
-vcount(net_ruiz_perez)
+vcount(net_ruiz_perez_taxa)
 
 # Count edges
-ecount(net_ruiz_perez)
+ecount(net_ruiz_perez_taxa)
 
 # Plot network
-plot(net_ruiz_perez)
+plot(net_ruiz_perez_taxa)
+```
 
-# TODO: Keep only microbial taxa nodes
-# TODO: Create microbiome-only network
+### Network 19: Lymberopoulos et al. 2022
+
+We read a gut microbiome co-enrichment network from a research paper. The network was created from gut microbiome samples using Topological Data Analysis, where connections represent co-enrichment relationships between microbial taxa.
+
+Link to data: https://github.com/thesharmalab-team/microbiome_covid/blob/main/CovidTDA/data_and_scripts/binarised_coenrichment_GMrepo_TDA_PD.csv
+
+The CSV file is read as an adjacency matrix and converted into an undirected igraph network. We then obtain basic network properties such as the number of nodes and edges.
+
+```{r}
+library(igraph)
+
+# Read adjacency matrix
+gut_data <- read.csv("data/19-lymberopoulos/binarised_coenrichment_GMrepo_TDA_PD.csv", row.names = 1, check.names = FALSE)
+
+# Keep only gut microbiome taxa
+gut_data <- as.matrix(gut_data[1:985, 1:985])
+
+# Create undirected network
+net_lymberopoulos <- graph_from_adjacency_matrix(gut_data, mode = "undirected", diag = FALSE)
+
+# Count nodes
+vcount(net_lymberopoulos)
+
+# Count edges
+ecount(net_lymberopoulos)
+
+# Plot network
+plot(net_lymberopoulos)
+```
+
+### Network 20: Loftus et al. 2021
+
+We read a colorectal cancer gut microbiome bacterial association network from a research paper. The data contains pairs of associated bacterial species and their association weights.
+
+Link to data: https://github.com/Markloftus/CancerMicrobiome/blob/main/Files/Dataframes/OnlyCRC_associations.csv
+
+The bacterial pairs are separated into two columns to create an edge list. The edge list is then converted into an undirected `igraph` network.
+
+```{r}
+library(igraph)
+
+# Read data
+crc_data <- read.csv("data/20-loftus/OnlyCRC_associations.csv")
+
+# Create edge list
+crc_edges <- data.frame(bacteria1 = sub("<-->.*", "", crc_data[[1]]),
+                        bacteria2 = sub(".*<-->", "", crc_data[[1]]),
+                        weight = crc_data[[2]])
+
+# Create network
+net_loftus_crc <- graph_from_data_frame(crc_edges, directed = FALSE)
+
+# Count nodes
+vcount(net_loftus_crc)
+
+# Count edges
+ecount(net_loftus_crc)
+
+# Plot network
+plot(net_loftus_crc)
+```
+
+### Network 21: Loftus et al. 2021
+
+We read a healthy gut microbiome bacterial association network from a research paper. The data contains pairs of associated bacterial species and their association weights.
+
+Link to data: https://github.com/Markloftus/CancerMicrobiome/blob/main/Files/Dataframes/OnlyHealthy_Associations.csv
+
+The bacterial pairs are separated into two columns to create an edge list. The edge list is then converted into an undirected `igraph` network.
+
+```{r}
+library(igraph)
+
+# Read data
+healthy_data <- read.csv("data/21-loftus/OnlyHealthy_Associations.csv")
+
+# Create edge list
+healthy_edges <- data.frame(bacteria1 = sub("<-->.*", "", healthy_data[[1]]),
+                            bacteria2 = sub(".*<-->", "", healthy_data[[1]]),
+                            weight = healthy_data[[2]])
+
+# Create network
+net_loftus_healthy <- graph_from_data_frame(healthy_edges, directed = FALSE)
+
+# Count nodes
+vcount(net_loftus_healthy)
+
+# Count edges
+ecount(net_loftus_healthy)
+
+# Plot network
+plot(net_loftus_healthy)
+```
+
+### Network 22: Ravikrishnan et al. 2021
+
+We read a gut microbiome metabolic association network under DMEM conditions. The data contains pairs of gut microbial species and their Metabolic Support Index (MSI) values.
+
+Link to data: https://github.com/aarthi31/gutmicrobiome/blob/master/MSIResults/edges_msi_benefit_dmem_withedgeval.txt
+
+The microbial pairs are used as an edge list, with the MSI value as the edge weight. The edge list is then converted into a directed `igraph` network.
+
+```{r}
+library(igraph)
+
+# Read DMEM interaction data
+dmem_data <- read.table("data/22-ravikrishnan/edges_msi_benefit_dmem_withedgeval.txt", header = TRUE, sep = "\t")
+
+# Create directed edge list
+dmem_edges <- data.frame(from = dmem_data[[2]], to = dmem_data[[1]],weight = dmem_data[[3]])
+
+# Create directed network
+net_ravikrishnan_dmem <- graph_from_data_frame(dmem_edges, directed = TRUE)
+
+# Count nodes
+vcount(net_ravikrishnan_dmem)
+
+# Count edges
+ecount(net_ravikrishnan_dmem)
+
+# Plot network
+plot(net_ravikrishnan_dmem)
+```
+
+## Network 23: Ravikrishnan et al. 2021
+
+We read a gut microbiome metabolic association network under high-fibre conditions. The data contains pairs of gut microbial species and their Metabolic Support Index (MSI) values.
+
+Link to data: https://github.com/aarthi31/gutmicrobiome/blob/master/MSIResults/edges_msi_benefit_hf_withedgeval.txt
+
+The microbial pairs are used as an edge list, with the MSI value as the edge weight. The edge list is then converted into a directed `igraph` network.
+
+```{r}
+library(igraph)
+
+# Read high-fibre interaction data
+hf_data <- read.table("data/23-ravikrishnan/edges_msi_benefit_hf_withedgeval.txt", header = TRUE, sep = "\t")
+
+# Create directed edge list
+hf_edges <- data.frame(from = hf_data[[2]], to = hf_data[[1]], weight = hf_data[[3]])
+
+# Create directed network
+net_ravikrishnan_hf <- graph_from_data_frame(hf_edges, directed = TRUE)
+
+# Count nodes
+vcount(net_ravikrishnan_hf)
+
+# Count edges
+ecount(net_ravikrishnan_hf)
+
+# Plot network
+plot(net_ravikrishnan_hf)
+```
+
+## Network 27: Li et al. 2019
+
+We read a healthy human gut microbiome interaction network from a research paper. The network contains microbial species as nodes and directed Transfer Entropy relationships between species as edges.
+
+Link to data: https://github.com/HokudaiNexusLab/Microbiome/tree/master/resultsNetwork
+
+The node and edge CSV files are read into R and combined to create the network. The edge weights represent Transfer Entropy, which measures information flow between microbial species. The files are then converted into a directed `igraph` network.
+
+```{r}
+library(igraph)
+
+# Read nodes
+healthy_nodes <- read.csv("data/Nodes_Healthy_Group_withoutC_C1.csv")
+
+# Read edges
+healthy_edges <- read.csv("data/Edges_Healthy_Group_withoutC_C1.csv")
+
+# Create network
+net_healthy <- graph_from_data_frame(healthy_edges, directed = TRUE, vertices = healthy_nodes)
+
+# Count nodes
+vcount(net_healthy)
+
+# Count edges
+ecount(net_healthy)
+
+# Plot network
+plot(net_healthy, vertex.label = V(net_healthy)$Label)
+```
+
+## Network 28: Li et al. 2019
+
+We read an unhealthy IBS human gut microbiome interaction network from a research paper. The network contains microbial species as nodes and directed Transfer Entropy relationships between species as edges. The paper compares interaction networks across healthy and unhealthy microbiome states.
+
+Link to data: https://github.com/HokudaiNexusLab/Microbiome/tree/master/resultsNetwork
+
+The node and edge CSV files are read into R and combined to create the network. The edge weights represent Transfer Entropy, which measures information flow between microbial species. The files are then converted into a directed igraph network.
+
+```{r}
+# Read nodes
+unhealthy_nodes <- read.csv("data/Nodes_MaxEnt_UnHealthy.csv")
+
+# Read edges
+unhealthy_edges <- read.csv("data/Edges_MaxEnt_UnHealthy.csv")
+
+# Create network
+net_unhealthy <- graph_from_data_frame(unhealthy_edges, directed = TRUE, vertices = unhealthy_nodes)
+
+# Count nodes
+vcount(net_unhealthy)
+
+# Count edges
+ecount(net_unhealthy)
+
+# Plot network
+plot(net_unhealthy, vertex.label = V(net_unhealthy)$Label)
 ```
 
 ## Compute Degree Distribution
