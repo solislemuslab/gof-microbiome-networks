@@ -5,33 +5,33 @@
 ### NetCoMi
 
 ```{r}
-install.packages("devtools")
-install.packages("BiocManager")
-install.packages("rgexf")
-devtools::install_github("zdk123/pulsar")
-
-# Since two of NetCoMi's dependencies are only available on GitHub, 
-# it is recommended to install them first:
-devtools::install_github("zdk123/SpiecEasi")
-options(timeout = 600)
-devtools::install_github("GraceYoon/SPRING")
-
-# Install NetCoMi
-devtools::install_github("stefpeschel/NetCoMi", 
-                         repos = c("https://cloud.r-project.org/",
-                                   BiocManager::repositories()))
+# install.packages("devtools")
+# install.packages("BiocManager")
+# install.packages("rgexf")
+# devtools::install_github("zdk123/pulsar")
+# 
+# # Since two of NetCoMi's dependencies are only available on GitHub, 
+# # it is recommended to install them first:
+# devtools::install_github("zdk123/SpiecEasi")
+# options(timeout = 600)
+# devtools::install_github("GraceYoon/SPRING")
+# 
+# # Install NetCoMi
+# devtools::install_github("stefpeschel/NetCoMi", 
+#                          repos = c("https://cloud.r-project.org/",
+#                                    BiocManager::repositories()))
 ```
 
 ### ggNetView
 
 ```{r}
-# install.packages("devtools")
-devtools::install_github("Jiawang1209/ggNetView")
+# # install.packages("devtools")
+# devtools::install_github("Jiawang1209/ggNetView")
 ```
 
 ## Reading network and counting nodes and edges 
 
-### Network 1: Steinway et al. 2015
+### Network 1: Steinway et al. 2015 (Not considering as node count is too small)
 
 We read a network from a research paper where the data is given as an adjacency matrix, where rows and columns are microbial taxa. Non-zero values indicate interactions between taxa.
 
@@ -39,33 +39,39 @@ Link to data: https://bitbucket.org/gutmicrobiomepaper/microbiomenetworkmodelpap
 
 Downloaded paths_in_boolean_net.txt and changed name to network_matrix.csv
 
-Convert the matrix into a binary network (edge exists or not).
+Convert the matrix into a binary network (edge exists or not)
 We then create a directed graph to obtain basic properties like the number of nodes and edges.
 
 ```{r}
-library(igraph)
-
-# Read the network matrix
-mat <- as.matrix(read.csv("data/01-steinway/network_matrix.csv", row.names = 1))
-
-# Make a copy of the matrix
-mat_binary <- mat
-
-# Convert all non-zero values to 1
-# Keep only where an edge exists
-mat_binary[mat_binary != 0] <- 1
-
-# Create the network
-g_steinway <- graph_from_adjacency_matrix(mat_binary, mode = "directed")
-
-# Count nodes
-vcount(g_steinway)
-
-# Count edges
-ecount(g_steinway)
-
-# Plot network
-plot(g_steinway)
+# library(igraph)
+# 
+# # Read the network matrix
+# mat <- as.matrix(read.csv("data/01-steinway/network_matrix.csv", row.names = 1))
+# 
+# # Make a copy of the matrix
+# mat_binary <- mat
+# 
+# # Convert all non-zero values to 1
+# # Keep only where an edge exists
+# mat_binary[mat_binary != 0] <- 1
+# 
+# # Create the network
+# g_steinway <- graph_from_adjacency_matrix(mat_binary, mode = "directed")
+# 
+# # Count nodes
+# vcount(g_steinway)
+# 
+# # Count edges
+# ecount(g_steinway)
+# 
+# # Plot network
+# plot(g_steinway, vertex.label = NA, vertex.size = 5)
+# 
+# # Degree
+# d1 <- mean(degree(g_steinway))
+# 
+# # Closeness
+# c1 <- mean(closeness(g_steinway, weights = NA), na.rm = TRUE)
 ```
 
 ### Network 2: Hall et al. 2019
@@ -73,7 +79,8 @@ plot(g_steinway)
 Link to data: https://www.ncbi.nlm.nih.gov/sra/PRJNA577760
 
 ```{r}
-
+load("data/02-hall/seqtabnochim.RData")
+load("data/02-hall/taxatabsilva.RData")
 ```
 
 ### Network 3: Liu et al. 2023
@@ -109,10 +116,20 @@ edges <- read.delim("data/05-hernandez/associations.tsv")
 # Look at the first few associations
 head(edges)
 
-# Create the network from the edge list
-# X_features and Y_features are the connected taxa
-# association is stored as an edge weight
-g_hernandez <- graph_from_data_frame(d = edges[, c("X_features", "Y_features", "association")], directed = FALSE)
+# Keep only associations between microbial genera
+# This removes metabolite-metabolite and metabolite-genera associations
+edges_genera <- edges[edges$interaction_type == "genera-genera", ]
+
+# Look at the filtered data
+head(edges_genera)
+
+# Create a microbiome-only network
+# X_features and Y_features are the connected microbial genera
+# association represents the strength of the relationship
+g_hernandez <- graph_from_data_frame(
+  d = edges_genera[, c("X_features", "Y_features", "association")],
+  directed = FALSE
+)
 
 # Count nodes
 vcount(g_hernandez)
@@ -121,7 +138,13 @@ vcount(g_hernandez)
 ecount(g_hernandez)
 
 # Plot network
-plot(g_hernandez)
+plot(g_hernandez, vertex.label = NA,  vertex.size = 5,)
+
+# Degree
+d5 <- mean(degree(g_hernandez))
+
+# Closeness
+c5 <- mean(closeness(g_hernandez, weights = NA), na.rm = TRUE)
 ```
 
 ### Network 6: Lacruz-Pleguezuelos et al. 2026
@@ -153,7 +176,13 @@ vcount(g_lacruz_pleguezuelos1)
 ecount(g_lacruz_pleguezuelos1)
 
 # Plot network
-plot(g_lacruz_pleguezuelos1)
+plot(g_lacruz_pleguezuelos1, vertex.label = NA, vertex.size = 5)
+
+# Degree
+d6 <- mean(degree(g_lacruz_pleguezuelos1))
+
+# Closeness
+c6 <- mean(closeness(g_lacruz_pleguezuelos1, weights = NA), na.rm = TRUE)
 ```
 
 ### Network 7: Lacruz-Pleguezuelos et al. 2026
@@ -185,7 +214,13 @@ vcount(g_lacruz_pleguezuelos2)
 ecount(g_lacruz_pleguezuelos2)
 
 # Plot network
-plot(g_lacruz_pleguezuelos2)
+plot(g_lacruz_pleguezuelos2, vertex.label = NA, vertex.size = 5)
+
+# Degree
+d7 <- mean(degree(g_lacruz_pleguezuelos2))
+
+# Closeness
+c7 <- mean(closeness(g_lacruz_pleguezuelos2, weights = NA), na.rm = TRUE)
 ```
 
 ### Network 8: Lacruz-Pleguezuelos et al. 2026
@@ -217,7 +252,13 @@ vcount(g_lacruz_pleguezuelos3)
 ecount(g_lacruz_pleguezuelos3)
 
 # Plot network
-plot(g_lacruz_pleguezuelos3)
+plot(g_lacruz_pleguezuelos3, vertex.label = NA, vertex.size = 5)
+
+# Degree
+d8 <- mean(degree(g_lacruz_pleguezuelos3))
+
+# Closeness
+c8 <- mean(closeness(g_lacruz_pleguezuelos3, weights = NA), na.rm = TRUE)
 ```
 
 ### Network 9: Lacruz-Pleguezuelos et al. 2026
@@ -249,7 +290,13 @@ vcount(g_lacruz_pleguezuelos4)
 ecount(g_lacruz_pleguezuelos4)
 
 # Plot network
-plot(g_lacruz_pleguezuelos4)
+plot(g_lacruz_pleguezuelos4, vertex.label = NA, vertex.size = 5)
+
+# Degree
+d9 <- mean(degree(g_lacruz_pleguezuelos4))
+
+# Closeness
+c9 <- mean(closeness(g_lacruz_pleguezuelos4, weights = NA), na.rm = TRUE)
 ```
 
 ### Network 10: Lacruz-Pleguezuelos et al. 2026
@@ -278,7 +325,13 @@ vcount(g_lacruz_pleguezuelos5)
 ecount(g_lacruz_pleguezuelos5)
 
 # Plot network
-plot(g_lacruz_pleguezuelos5)
+plot(g_lacruz_pleguezuelos5, vertex.label = NA, vertex.size = 5)
+
+# Degree
+d10 <- mean(degree(g_lacruz_pleguezuelos5))
+
+# Closeness
+c10 <- mean(closeness(g_lacruz_pleguezuelos5, weights = NA), na.rm = TRUE)
 ```
 
 ### Network 11: Jeong et al. 2023
@@ -311,7 +364,17 @@ vcount(g_jeong_s_type)
 ecount(g_jeong_s_type)
 
 # Plot network
-plot(g_jeong_s_type)
+# Ignore edge weights when determining the layout because some weights are negative
+plot(
+  g_jeong_s_type,
+  layout = layout_with_fr(g_jeong_s_type, weights = NA)
+)
+
+# Degree
+d11 <- mean(degree(g_jeong_s_type))
+
+# Closeness
+c11 <- mean(closeness(g_jeong_s_type, weights = NA), na.rm = TRUE)
 ```
 
 ### Network 12: Jeong et al. 2023
@@ -344,10 +407,16 @@ vcount(g_jeong_h_type)
 ecount(g_jeong_h_type)
 
 # Plot network
-plot(g_jeong_h_type)
+plot(g_jeong_h_type, vertex.label = NA, vertex.size = 5)
+
+# Degree
+d12 <- mean(degree(g_jeong_h_type))
+
+# Closeness
+c12 <- mean(closeness(g_jeong_h_type, weights = NA), na.rm = TRUE)
 ```
 
-### Network 13: Goyal et al. 2021
+### Network 13: Goyal et al. 2021 (Not considering as labels only include microbe IDs)
 
 We read a human gut microbiome cross-feeding network from a research paper. The network connects microbial species and metabolites, where interactions represent metabolite consumption, production, or both. The original network was based on experimentally verified and manually curated gut microbiome interactions.
 
@@ -356,30 +425,36 @@ Link to data: https://github.com/maslov-group/ML_human_gut/blob/master/data/prun
 The CSV file is read into R as an edge list and converted into an undirected igraph object. We then obtain basic network properties such as the number of nodes and edges.
 
 ```{r}
-library(igraph)
-
-# Read cross-feeding edge list
-net_goyal_data <- read.csv("data/13-goyal/pruned_chia_network.csv")
-
-# Rename columns
-names(net_goyal_data) <- c("metabolite_id", "microbe_id", "edge_type")
-
-# Add prefixes so metabolite and microbe nodes are clearly distinct
-net_goyal_data$metabolite_id <- paste0("metabolite_", net_goyal_data$metabolite_id)
-
-net_goyal_data$microbe_id <- paste0("microbe_",nnet_goyal_data$microbe_id)
-
-# Convert edge list into an undirected igraph object
-net_goyal <- graph_from_data_frame(net_goyal_data, directed = FALSE)
-
-# Count nodes
-vcount(net_goyal)
-
-# Count edges
-ecount(net_goyal)
-
-# Plot network
-plot(net_goyal)
+# library(igraph)
+# 
+# # Read cross-feeding edge list
+# net_goyal_data <- read.csv("data/13-goyal/pruned_chia_network.csv")
+# 
+# # Rename columns
+# names(net_goyal_data) <- c("metabolite_id", "microbe_id", "edge_type")
+# 
+# # Add prefixes so metabolite and microbe nodes are clearly distinct
+# net_goyal_data$metabolite_id <- paste0("metabolite_", net_goyal_data$metabolite_id)
+# 
+# net_goyal_data$microbe_id <- paste0("microbe_",net_goyal_data$microbe_id)
+# 
+# # Convert edge list into an undirected igraph object
+# net_goyal <- graph_from_data_frame(net_goyal_data, directed = FALSE)
+# 
+# # Count nodes
+# vcount(net_goyal)
+# 
+# # Count edges
+# ecount(net_goyal)
+# 
+# # Plot network
+# plot(net_goyal, vertex.label = NA, vertex.size = 5)
+# 
+# # Degree
+# d13 <- mean(degree(net_goyal))
+# 
+# # Closeness
+# c13 <- mean(closeness(net_goyal, weights = NA), na.rm = TRUE)
 ```
 
 ### Network 15: Lugo-Martinez et al. 2019
@@ -404,7 +479,13 @@ vcount(net_lugo_martinez)
 ecount(net_lugo_martinez)
 
 # Plot network
-plot(net_lugo_martinez)
+plot(net_lugo_martinez, vertex.label = NA, vertex.size = 5)
+
+# Degree
+d15 <- mean(degree(net_lugo_martinez))
+
+# Closeness
+c15 <- mean(closeness(net_lugo_martinez, weights = NA), na.rm = TRUE)
 ```
 
 ### Network 17: Melnyk et al. 2020
@@ -442,7 +523,13 @@ vcount(net_ruiz_perez_taxa)
 ecount(net_ruiz_perez_taxa)
 
 # Plot network
-plot(net_ruiz_perez_taxa)
+plot(net_ruiz_perez_taxa, vertex.label = NA, vertex.size = 5)
+
+# Degree
+d18 <- mean(degree(net_ruiz_perez_taxa))
+
+# Closeness
+c18 <- mean(closeness(net_ruiz_perez_taxa, weights = NA), na.rm = TRUE)
 ```
 
 ### Network 19: Lymberopoulos et al. 2022
@@ -472,7 +559,13 @@ vcount(net_lymberopoulos)
 ecount(net_lymberopoulos)
 
 # Plot network
-plot(net_lymberopoulos)
+plot(net_lymberopoulos, vertex.label = NA, vertex.size = 5)
+
+# Degree
+d19 <- mean(degree(net_lymberopoulos))
+
+# Closeness
+c19 <- mean(closeness(net_lymberopoulos, weights = NA), na.rm = TRUE)
 ```
 
 ### Network 20: Loftus et al. 2021
@@ -504,7 +597,13 @@ vcount(net_loftus_crc)
 ecount(net_loftus_crc)
 
 # Plot network
-plot(net_loftus_crc)
+plot(net_loftus_crc, vertex.label = NA, vertex.size = 5)
+
+# Degree
+d20 <- mean(degree(net_loftus_crc))
+
+# Closeness
+c20 <- mean(closeness(net_loftus_crc, weights = NA), na.rm = TRUE)
 ```
 
 ### Network 21: Loftus et al. 2021
@@ -536,7 +635,13 @@ vcount(net_loftus_healthy)
 ecount(net_loftus_healthy)
 
 # Plot network
-plot(net_loftus_healthy)
+plot(net_loftus_healthy, vertex.label = NA, vertex.size = 5)
+
+# Degree
+d21 <- mean(degree(net_loftus_healthy))
+
+# Closeness
+c21 <- mean(closeness(net_loftus_healthy, weights = NA), na.rm = TRUE)
 ```
 
 ### Network 22: Ravikrishnan et al. 2021
@@ -566,7 +671,13 @@ vcount(net_ravikrishnan_dmem)
 ecount(net_ravikrishnan_dmem)
 
 # Plot network
-plot(net_ravikrishnan_dmem)
+plot(net_ravikrishnan_dmem, vertex.label = NA, vertex.size = 5)
+
+# Degree
+d22 <- mean(degree(net_ravikrishnan_dmem))
+
+# Closeness
+c22 <- mean(closeness(net_ravikrishnan_dmem, weights = NA), na.rm = TRUE)
 ```
 
 ## Network 23: Ravikrishnan et al. 2021
@@ -596,7 +707,13 @@ vcount(net_ravikrishnan_hf)
 ecount(net_ravikrishnan_hf)
 
 # Plot network
-plot(net_ravikrishnan_hf)
+plot(net_ravikrishnan_hf, vertex.label = NA, vertex.size = 5)
+
+# Degree
+d23 <- mean(degree(net_ravikrishnan_hf))
+
+# Closeness
+c23 <- mean(closeness(net_ravikrishnan_hf, weights = NA), na.rm = TRUE)
 ```
 
 ## Network 27: Li et al. 2019
@@ -611,10 +728,10 @@ The node and edge CSV files are read into R and combined to create the network. 
 library(igraph)
 
 # Read nodes
-healthy_nodes <- read.csv("data/Nodes_Healthy_Group_withoutC_C1.csv")
+healthy_nodes <- read.csv("data/27-li/Nodes_Healthy_Group_withoutC_C1.csv")
 
 # Read edges
-healthy_edges <- read.csv("data/Edges_Healthy_Group_withoutC_C1.csv")
+healthy_edges <- read.csv("data/27-li/Edges_Healthy_Group_withoutC_C1.csv")
 
 # Create network
 net_healthy <- graph_from_data_frame(healthy_edges, directed = TRUE, vertices = healthy_nodes)
@@ -626,7 +743,13 @@ vcount(net_healthy)
 ecount(net_healthy)
 
 # Plot network
-plot(net_healthy, vertex.label = V(net_healthy)$Label)
+plot(net_healthy, vertex.label = NA, vertex.size = 5)
+
+# Degree
+d27 <- mean(degree(net_healthy))
+
+# Closeness
+c27 <- mean(closeness(net_healthy, weights = NA), na.rm = TRUE)
 ```
 
 ## Network 28: Li et al. 2019
@@ -639,10 +762,10 @@ The node and edge CSV files are read into R and combined to create the network. 
 
 ```{r}
 # Read nodes
-unhealthy_nodes <- read.csv("data/Nodes_MaxEnt_UnHealthy.csv")
+unhealthy_nodes <- read.csv("data/28-li/Nodes_MaxEnt_UnHealthy.csv")
 
 # Read edges
-unhealthy_edges <- read.csv("data/Edges_MaxEnt_UnHealthy.csv")
+unhealthy_edges <- read.csv("data/28-li/Edges_MaxEnt_UnHealthy.csv")
 
 # Create network
 net_unhealthy <- graph_from_data_frame(unhealthy_edges, directed = TRUE, vertices = unhealthy_nodes)
@@ -654,7 +777,404 @@ vcount(net_unhealthy)
 ecount(net_unhealthy)
 
 # Plot network
-plot(net_unhealthy, vertex.label = V(net_unhealthy)$Label)
+plot(net_unhealthy, vertex.label = NA, vertex.size = 5)
+
+# Degree
+d28 <- mean(degree(net_unhealthy))
+
+# Closeness
+c28 <- mean(closeness(net_unhealthy, weights = NA), na.rm = TRUE)
+```
+
+## Organizing networks into table
+
+Here we organizing all igraph networks from smallest to largest (node count) and displaying them on a table.
+
+```{r}
+library(igraph)
+
+# Get all objects currently stored in R
+all_objects <- mget(ls())
+
+# Keep only objects that are igraph networks
+networks <- Filter(
+  function(x) inherits(x, "igraph"),
+  all_objects
+)
+
+# Count how many networks were found
+length(networks)
+
+# Display the names of the networks
+names(networks)
+
+# Create table with network information
+network_table <- data.frame(
+  network = names(networks),
+  nodes = sapply(networks, vcount),
+  edges = sapply(networks, ecount)
+)
+
+# Sort networks from smallest to largest
+network_table <- network_table[order(network_table$nodes), ]
+
+# Display the table
+network_table
+
+nrow(network_table)
+```
+
+## Histogram of networks node count
+
+```{r}
+hist(network_table$nodes,
+     main = "Distribution of Nodes Across Networks",
+     xlab = "Number of Nodes",
+     ylab = "Number of Networks",
+     col = "lightblue",
+     border = "white")
+
+hist(network_table$nodes,
+     breaks = seq(0, max(network_table$nodes) + 50, by = 50),
+     main = "Distribution of Nodes Across Networks",
+     xlab = "Number of Nodes",
+     ylab = "Number of Networks",
+     col = "lightblue",
+     border = "white",
+     xaxt = "n")
+
+# Display x-axis labels every 50 nodes
+axis(1, at = seq(0, max(network_table$nodes) + 50, by = 50))
+```
+
+## Bar plot of nodes across networks
+
+```{r}
+bp <- barplot(network_table$nodes,
+        names.arg = network_table$network,
+        main = "Number of Nodes Across Networks",
+        ylab = "Number of Nodes",
+        col = "lightblue",
+        las = 2,
+        cex.names = 0.7,
+        ylim = c(0, max(network_table$nodes) * 1.15))
+
+text(bp, network_table$nodes,
+     labels = network_table$nodes,
+     pos = 3,
+     cex = 0.7)
+
+# Find shared nodes between all networks (will possibly be about 20 per network)
+
+# Calculate features of all networks
+
+# Comparing different network models (find as many network models!)
+```
+
+
+## Shared microbes across all networks (v3: species-level matching)
+
+The genus-level networks (Hernandez, Jeong S-type and H-type) and Goyal are left out, and the remaining networks are matched at species level. A species counts as shared only if it appears in every remaining network. Set `match_level <- "genus"` to go back to genus matching.
+
+Run this chunk after all network chunks and before the "Organizing networks into table" chunk. It replaces the earlier versions.
+
+```{r}
+library(igraph)
+
+# ---- 1. Settings ------------------------------------------------------------
+
+# "species" matches on "genus species"; "genus" matches on genus only
+match_level <- "species"
+
+# igraph objects that should NOT take part in the comparison:
+# - net_goyal: numeric IDs and metabolites
+# - g_hernandez, g_jeong_s_type, g_jeong_h_type: genus-level only
+# - net_healthy, net_unhealthy (Li): nodes are bacterial families
+# - net_lugo_martinez: nodes are bacterial classes plus clinical variables
+# - net_ruiz_perez: full network with genes/metabolites; the taxa-only
+#   version net_ruiz_perez_taxa is used instead
+# - g_steinway: only 9 nodes
+# - g, g_er: leftover helper / model objects, not real networks
+exclude <- c("net_goyal", "g_hernandez", "g_jeong_s_type", "g_jeong_h_type",
+             "net_healthy", "net_unhealthy", "net_lugo_martinez",
+             "net_ruiz_perez", "g_steinway", "g", "g_er")
+
+# Renamed / synonymous genera, written in lowercase as old = "new".
+# Add entries as you discover mismatches in the near-miss table below.
+genus_aliases <- c(
+  "propionibacterium" = "cutibacterium"
+)
+
+# Labels that carry no taxonomic information
+no_info <- c("uncultured", "unclassified", "unknown", "na")
+
+# ---- 2. Collect the networks ------------------------------------------------
+
+net_list <- Filter(function(x) inherits(x, "igraph"), mget(ls()))
+net_list <- net_list[!(names(net_list) %in% exclude)]
+
+length(net_list)
+names(net_list)
+
+# ---- 3. Helper functions ----------------------------------------------------
+
+# Get node labels. Edge-list networks store them in "name"; GraphML networks
+# store them in "id" or "label".
+get_node_names <- function(g) {
+  attrs <- vertex_attr_names(g)
+  for (a in c("name", "id", "label")) {
+    if (a %in% attrs) return(as.character(vertex_attr(g, a)))
+  }
+  stop("No name/id/label vertex attribute found")
+}
+
+# Turn each label into a character vector of lowercase taxa (possibly empty):
+#   species level: "bacteroides fragilis"
+#   genus level:   "bacteroides"
+# Labels without enough information (e.g. "Bacteroides sp.") give an empty vector.
+clean_taxa <- function(x, level = match_level) {
+  x <- trimws(as.character(x))
+
+  # Taxonomy strings: keep the part after s__ (species) or g__ (genus)
+  tag <- if (level == "species") "s__" else "g__"
+  has_tag <- grepl(tag, x, fixed = TRUE)
+  x[has_tag] <- sub(paste0("^.*", tag, "([^;|,]*).*$"), "\\1", x[has_tag])
+
+  # Leftover rank prefixes such as s__
+  x <- sub("^[a-z]__", "", x)
+
+  # Brackets and quotes, e.g. "[Eubacterium] rectale"
+  x <- gsub("[][\"'()]", "", x)
+
+  # Underscores and dots become spaces: "Bacteroides_fragilis" -> "Bacteroides fragilis"
+  x <- gsub("[_.]+", " ", x)
+  x <- gsub("\\s+", " ", trimws(x))
+
+  # "Candidatus Genus species" -> "Genus species"
+  x <- sub("^Candidatus ", "", x, ignore.case = TRUE)
+  x <- tolower(x)
+
+  lapply(strsplit(x, " ", fixed = TRUE), function(w) {
+    if (length(w) == 0 || is.na(w[1]) || !nzchar(w[1])) return(character(0))
+
+    if (level == "genus") {
+      # "escherichia-shigella" counts as both genera
+      parts <- strsplit(w[1], "[-/]")[[1]]
+      parts <- parts[nzchar(parts)]
+      hit <- parts %in% names(genus_aliases)
+      parts[hit] <- unname(genus_aliases[parts[hit]])
+      return(unique(setdiff(parts, no_info)))
+    }
+
+    # Species level: needs a genus and a real species word
+    if (w[1] %in% no_info || length(w) < 2) return(character(0))
+    genus <- w[1]
+    species <- w[2]
+    if (species %in% c(no_info, "sp", "spp", "bacterium", "genomosp", "cf") ||
+        grepl("^[0-9]", species)) return(character(0))
+    if (genus %in% names(genus_aliases)) genus <- unname(genus_aliases[genus])
+    paste(genus, species)
+  })
+}
+
+# ---- 4. Add taxon labels to every node --------------------------------------
+
+# taxa_all holds all matched taxa of a node, separated by ";"
+net_list <- lapply(net_list, function(g) {
+  V(g)$taxa_all <- vapply(clean_taxa(get_node_names(g)),
+                          paste, character(1), collapse = ";")
+  g
+})
+
+node_taxa <- function(g) strsplit(V(g)$taxa_all, ";", fixed = TRUE)
+
+# Sanity check: original vs cleaned names for each network.
+# A network with most nodes "unresolved" is probably not labeled at this level.
+invisible(lapply(names(net_list), function(nm) {
+  g <- net_list[[nm]]
+  cat("\n", nm, "-", vcount(g), "nodes,", sum(V(g)$taxa_all == ""),
+      "unresolved at", match_level, "level\n")
+  print(head(data.frame(original = get_node_names(g), matched = V(g)$taxa_all), 4))
+}))
+
+# ---- 5. Find taxa shared by ALL networks ------------------------------------
+
+taxon_sets <- lapply(net_list, function(g) unique(unlist(node_taxa(g))))
+
+shared_taxa <- Reduce(intersect, taxon_sets)
+length(shared_taxa)
+shared_taxa
+
+# How many networks each taxon appears in
+taxon_presence <- sort(table(unlist(taxon_sets)), decreasing = TRUE)
+head(taxon_presence, 20)
+
+# Leave-one-out: size of the shared set if each network were left out.
+# A big jump points at the network that limits the overlap.
+leave_one_out <- sapply(names(taxon_sets), function(nm) {
+  length(Reduce(intersect, taxon_sets[names(taxon_sets) != nm]))
+})
+sort(leave_one_out, decreasing = TRUE)
+
+# Near misses: taxa present in every network except one.
+# Look here for spelling variants or renamed genera, then add them to genus_aliases.
+near_miss <- names(taxon_presence)[taxon_presence == length(net_list) - 1]
+if (length(near_miss) > 0) {
+  data.frame(
+    taxon = near_miss,
+    missing_from = vapply(near_miss, function(tx) {
+      names(taxon_sets)[!vapply(taxon_sets, function(s) tx %in% s, logical(1))]
+    }, character(1)),
+    row.names = NULL
+  )
+}
+
+# ---- 6. Build filtered versions of each network -----------------------------
+
+# Keep nodes with at least one shared taxon. Original nodes are kept as they
+# are, so edges between them are preserved.
+net_list_shared <- lapply(net_list, function(g) {
+  keep <- vapply(node_taxa(g), function(tok) any(tok %in% shared_taxa), logical(1))
+  induced_subgraph(g, V(g)[keep])
+})
+
+# Compare size before and after
+shared_summary <- data.frame(
+  network = names(net_list),
+  nodes_before = sapply(net_list, vcount),
+  edges_before = sapply(net_list, ecount),
+  nodes_after = sapply(net_list_shared, vcount),
+  edges_after = sapply(net_list_shared, ecount)
+)
+shared_summary
+
+shared_taxa
+```
+
+## Export node and edge tables of all networks to CSV
+
+Writes one combined CSV for nodes and one for edges, with a `network` column saying which network each row belongs to. Every vertex/edge attribute is included (columns that exist in only some networks are filled with NA). The node table also has the cleaned taxon labels, each node's degree, and whether the node is in the shared set.
+
+Run this after the shared-nodes chunk (v3), because it uses `net_list`, `node_taxa()`, `get_node_names()` and `shared_taxa` from that chunk.
+
+```{r}
+library(igraph)
+
+dir.create("output", showWarnings = FALSE)
+
+# This chunk needs the results of the shared-nodes v3 chunk. Stop early with a
+# clear message if that chunk has not been run in this session.
+if (!exists("net_list") || !exists("shared_taxa") ||
+    !all(vapply(net_list, function(g) "taxa_all" %in% vertex_attr_names(g), logical(1)))) {
+  stop("Run the shared-nodes v3 chunk first (it creates net_list, shared_taxa and taxa_all).")
+}
+
+# Helpers, repeated from the v3 chunk so this chunk also works if they are missing
+get_node_names <- function(g) {
+  attrs <- vertex_attr_names(g)
+  for (a in c("name", "id", "label")) {
+    if (a %in% attrs) return(as.character(vertex_attr(g, a)))
+  }
+  stop("No name/id/label vertex attribute found")
+}
+
+node_taxa <- function(g) strsplit(V(g)$taxa_all, ";", fixed = TRUE)
+
+# Stack data frames that have different columns, filling gaps with NA
+bind_fill <- function(dfs) {
+  all_cols <- unique(unlist(lapply(dfs, names)))
+  dfs <- lapply(dfs, function(d) {
+    missing <- setdiff(all_cols, names(d))
+    d[missing] <- NA
+    d[all_cols]
+  })
+  out <- do.call(rbind, dfs)
+  rownames(out) <- NULL
+  out
+}
+
+# write.csv cannot handle list columns, so flatten them first
+flatten_lists <- function(d) {
+  d[] <- lapply(d, function(col) {
+    if (is.list(col)) vapply(col, paste, character(1), collapse = ";") else col
+  })
+  d
+}
+
+# ---- Node table: one row per node, all vertex attributes --------------------
+
+node_tables <- lapply(names(net_list), function(nm) {
+  g <- net_list[[nm]]
+  d <- as_data_frame(g, what = "vertices")
+  d$node_label <- get_node_names(g)
+  d$degree <- as.numeric(degree(g))
+  d$in_shared_set <- vapply(node_taxa(g), function(tok) any(tok %in% shared_taxa), logical(1))
+  d$network <- nm
+  d <- flatten_lists(d)
+  # Put the identifying columns first
+  first_cols <- c("network", "node_label", "taxa_all", "in_shared_set", "degree")
+  d[c(intersect(first_cols, names(d)), setdiff(names(d), first_cols))]
+})
+
+all_nodes <- bind_fill(node_tables)
+write.csv(all_nodes, "output/all_network_nodes.csv", row.names = FALSE)
+
+dim(all_nodes)
+head(all_nodes)
+
+# ---- Edge table: one row per edge, all edge attributes ----------------------
+
+edge_tables <- lapply(names(net_list), function(nm) {
+  d <- as_data_frame(net_list[[nm]], what = "edges")
+  d$network <- nm
+  d <- flatten_lists(d)
+  d[c("network", setdiff(names(d), "network"))]
+})
+
+all_edges <- bind_fill(edge_tables)
+write.csv(all_edges, "output/all_network_edges.csv", row.names = FALSE)
+
+dim(all_edges)
+head(all_edges)
+
+# ---- Optional: one-row-per-network summary ----------------------------------
+
+network_summary <- data.frame(
+  network = names(net_list),
+  nodes = sapply(net_list, vcount),
+  edges = sapply(net_list, ecount),
+  directed = sapply(net_list, is_directed),
+  node_attributes = sapply(net_list, function(g) paste(vertex_attr_names(g), collapse = ";")),
+  edge_attributes = sapply(net_list, function(g) paste(edge_attr_names(g), collapse = ";"))
+)
+write.csv(network_summary, "output/network_summary.csv", row.names = FALSE)
+network_summary
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+## Network Features
+
+```{r}
+degree_values <- c(d1, d5, d6, d7, d8, d9, d10, d11, d12, d13, d15, d19, d20, d21, d22, d23, d27, d28)
+
+closeness_values <- c(c1, c5, c6, c7, c8, c9, c10, c11, c12, c13, c15, c18, c19, c20, c21, c22, c23, c27, c28)
+
+hist(degree_values)
+hist(closeness_values)
 ```
 
 ## Compute Degree Distribution
