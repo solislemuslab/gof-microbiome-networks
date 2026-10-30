@@ -56,22 +56,22 @@ We then create a directed graph to obtain basic properties like the number of no
 # mat_binary[mat_binary != 0] <- 1
 # 
 # # Create the network
-# g_steinway <- graph_from_adjacency_matrix(mat_binary, mode = "directed")
+# net_steinway <- graph_from_adjacency_matrix(mat_binary, mode = "directed")
 # 
 # # Count nodes
-# vcount(g_steinway)
+# vcount(net_steinway)
 # 
 # # Count edges
-# ecount(g_steinway)
+# ecount(net_steinway)
 # 
 # # Plot network
-# plot(g_steinway, vertex.label = NA, vertex.size = 5)
+# plot(net_steinway, vertex.label = NA, vertex.size = 5)
 # 
 # # Degree
-# d1 <- mean(degree(g_steinway))
+# d1 <- mean(degree(net_steinway))
 # 
 # # Closeness
-# c1 <- mean(closeness(g_steinway, weights = NA), na.rm = TRUE)
+# c1 <- mean(closeness(net_steinway, weights = NA), na.rm = TRUE)
 ```
 
 ### Network 2: Hall et al. 2019
@@ -132,19 +132,19 @@ g_hernandez <- graph_from_data_frame(
 )
 
 # Count nodes
-vcount(g_hernandez)
+vcount(net_hernandez)
 
 # Count edges
-ecount(g_hernandez)
+ecount(net_hernandez)
 
 # Plot network
-plot(g_hernandez, vertex.label = NA,  vertex.size = 5,)
+plot(net_hernandez, vertex.label = NA,  vertex.size = 5,)
 
 # Degree
-d5 <- mean(degree(g_hernandez))
+d5 <- mean(degree(net_hernandez))
 
 # Closeness
-c5 <- mean(closeness(g_hernandez, weights = NA), na.rm = TRUE)
+c5 <- mean(closeness(net_hernandez, weights = NA), na.rm = TRUE)
 ```
 
 ### Network 6: Lacruz-Pleguezuelos et al. 2026
@@ -167,22 +167,22 @@ head(edges_lacruz_pleguezuelos1)
 # Create the network from the edge list
 # v1 and v2 are the connected taxa
 # edgeweight is stored as an edge weight
-g_lacruz_pleguezuelos1 <- graph_from_data_frame(d = edges_lacruz_pleguezuelos1[, c("v1", "v2", "edgeweight")], directed = FALSE)
+net_lacruz_pleguezuelos1 <- graph_from_data_frame(d = edges_lacruz_pleguezuelos1[, c("v1", "v2", "edgeweight")], directed = FALSE)
 
 # Count nodes
-vcount(g_lacruz_pleguezuelos1)
+vcount(net_lacruz_pleguezuelos1)
 
 # Count edges
-ecount(g_lacruz_pleguezuelos1)
+ecount(net_lacruz_pleguezuelos1)
 
 # Plot network
-plot(g_lacruz_pleguezuelos1, vertex.label = NA, vertex.size = 5)
+plot(net_lacruz_pleguezuelos1, vertex.label = NA, vertex.size = 5)
 
 # Degree
-d6 <- mean(degree(g_lacruz_pleguezuelos1))
+d6 <- mean(degree(net_lacruz_pleguezuelos1))
 
 # Closeness
-c6 <- mean(closeness(g_lacruz_pleguezuelos1, weights = NA), na.rm = TRUE)
+c6 <- mean(closeness(net_lacruz_pleguezuelos1, weights = NA), na.rm = TRUE)
 ```
 
 ### Network 7: Lacruz-Pleguezuelos et al. 2026
@@ -205,22 +205,22 @@ head(edges_lacruz_pleguezuelos2)
 # Create the network from the edge list
 # v1 and v2 are the connected taxa
 # edgeweight is stored as an edge weight
-g_lacruz_pleguezuelos2 <- graph_from_data_frame(d = edges_lacruz_pleguezuelos2[, c("v1", "v2", "edgeweight")], directed = FALSE)
+net_lacruz_pleguezuelos2 <- graph_from_data_frame(d = edges_lacruz_pleguezuelos2[, c("v1", "v2", "edgeweight")], directed = FALSE)
 
 # Count nodes
-vcount(g_lacruz_pleguezuelos2)
+vcount(net_lacruz_pleguezuelos2)
 
 # Count edges
-ecount(g_lacruz_pleguezuelos2)
+ecount(net_lacruz_pleguezuelos2)
 
 # Plot network
-plot(g_lacruz_pleguezuelos2, vertex.label = NA, vertex.size = 5)
+plot(net_lacruz_pleguezuelos2, vertex.label = NA, vertex.size = 5)
 
 # Degree
-d7 <- mean(degree(g_lacruz_pleguezuelos2))
+d7 <- mean(degree(net_lacruz_pleguezuelos2))
 
 # Closeness
-c7 <- mean(closeness(g_lacruz_pleguezuelos2, weights = NA), na.rm = TRUE)
+c7 <- mean(closeness(net_lacruz_pleguezuelos2, weights = NA), na.rm = TRUE)
 ```
 
 ### Network 8: Lacruz-Pleguezuelos et al. 2026
@@ -243,22 +243,22 @@ head(edges_lacruz_pleguezuelos3)
 # Create the network from the edge list
 # v1 and v2 are the connected taxa
 # edgeweight is stored as an edge weight
-g_lacruz_pleguezuelos3 <- graph_from_data_frame(d = edges_lacruz_pleguezuelos3[, c("v1", "v2", "edgeweight")], directed = FALSE)
+net_lacruz_pleguezuelos3 <- graph_from_data_frame(d = edges_lacruz_pleguezuelos3[, c("v1", "v2", "edgeweight")], directed = FALSE)
 
 # Count nodes
-vcount(g_lacruz_pleguezuelos3)
+vcount(net_lacruz_pleguezuelos3)
 
 # Count edges
-ecount(g_lacruz_pleguezuelos3)
+ecount(net_lacruz_pleguezuelos3)
 
 # Plot network
-plot(g_lacruz_pleguezuelos3, vertex.label = NA, vertex.size = 5)
+plot(net_lacruz_pleguezuelos3, vertex.label = NA, vertex.size = 5)
 
 # Degree
-d8 <- mean(degree(g_lacruz_pleguezuelos3))
+d8 <- mean(degree(net_lacruz_pleguezuelos3))
 
 # Closeness
-c8 <- mean(closeness(g_lacruz_pleguezuelos3, weights = NA), na.rm = TRUE)
+c8 <- mean(closeness(net_lacruz_pleguezuelos3, weights = NA), na.rm = TRUE)
 ```
 
 ### Network 9: Lacruz-Pleguezuelos et al. 2026
@@ -281,22 +281,22 @@ head(edges_lacruz_pleguezuelos4)
 # Create the network from the edge list
 # v1 and v2 are the connected taxa
 # edgeweight is stored as an edge weight
-g_lacruz_pleguezuelos4 <- graph_from_data_frame(d = edges_lacruz_pleguezuelos4[, c("v1", "v2", "edgeweight")], directed = FALSE)
+net_lacruz_pleguezuelos4 <- graph_from_data_frame(d = edges_lacruz_pleguezuelos4[, c("v1", "v2", "edgeweight")], directed = FALSE)
 
 # Count nodes
-vcount(g_lacruz_pleguezuelos4)
+vcount(net_lacruz_pleguezuelos4)
 
 # Count edges
-ecount(g_lacruz_pleguezuelos4)
+ecount(net_lacruz_pleguezuelos4)
 
 # Plot network
-plot(g_lacruz_pleguezuelos4, vertex.label = NA, vertex.size = 5)
+plot(net_lacruz_pleguezuelos4, vertex.label = NA, vertex.size = 5)
 
 # Degree
-d9 <- mean(degree(g_lacruz_pleguezuelos4))
+d9 <- mean(degree(net_lacruz_pleguezuelos4))
 
 # Closeness
-c9 <- mean(closeness(g_lacruz_pleguezuelos4, weights = NA), na.rm = TRUE)
+c9 <- mean(closeness(net_lacruz_pleguezuelos4, weights = NA), na.rm = TRUE)
 ```
 
 ### Network 10: Lacruz-Pleguezuelos et al. 2026
@@ -316,22 +316,22 @@ edges_lacruz_pleguezuelos5 <- read.csv("data/10-lacruz-pleguezuelos/edgeweights_
 # Create the network from the edge list
 # v1 and v2 are the connected taxa
 # edgeweight is stored as an edge weight
-g_lacruz_pleguezuelos5 <- graph_from_data_frame(d = edges_lacruz_pleguezuelos5[, c("v1", "v2", "edgeweight")], directed = FALSE)
+net_lacruz_pleguezuelos5 <- graph_from_data_frame(d = edges_lacruz_pleguezuelos5[, c("v1", "v2", "edgeweight")], directed = FALSE)
 
 # Count nodes
-vcount(g_lacruz_pleguezuelos5)
+vcount(net_lacruz_pleguezuelos5)
 
 # Count edges
-ecount(g_lacruz_pleguezuelos5)
+ecount(net_lacruz_pleguezuelos5)
 
 # Plot network
-plot(g_lacruz_pleguezuelos5, vertex.label = NA, vertex.size = 5)
+plot(net_lacruz_pleguezuelos5, vertex.label = NA, vertex.size = 5)
 
 # Degree
-d10 <- mean(degree(g_lacruz_pleguezuelos5))
+d10 <- mean(degree(net_lacruz_pleguezuelos5))
 
 # Closeness
-c10 <- mean(closeness(g_lacruz_pleguezuelos5, weights = NA), na.rm = TRUE)
+c10 <- mean(closeness(net_lacruz_pleguezuelos5, weights = NA), na.rm = TRUE)
 ```
 
 ### Network 11: Jeong et al. 2023
@@ -355,26 +355,26 @@ head(edges_jeong_s_type)
 # Source and target are the connected bacterial genera
 # Weight is the SparCC R-value
 # Sign indicates whether the association is positive or negative
-g_jeong_s_type <- graph_from_data_frame(d = edges_jeong_s_type[, c("source", "target", "weight", "sign")], directed = FALSE)
+net_jeong1 <- graph_from_data_frame(d = edges_jeong_s_type[, c("source", "target", "weight", "sign")], directed = FALSE)
 
 # Count nodes
-vcount(g_jeong_s_type)
+vcount(net_jeong1)
 
 # Count edges
-ecount(g_jeong_s_type)
+ecount(net_jeong1)
 
 # Plot network
 # Ignore edge weights when determining the layout because some weights are negative
 plot(
-  g_jeong_s_type,
-  layout = layout_with_fr(g_jeong_s_type, weights = NA)
+  net_jeong1,
+  layout = layout_with_fr(net_jeong1, weights = NA)
 )
 
 # Degree
-d11 <- mean(degree(g_jeong_s_type))
+d11 <- mean(degree(net_jeong1))
 
 # Closeness
-c11 <- mean(closeness(g_jeong_s_type, weights = NA), na.rm = TRUE)
+c11 <- mean(closeness(net_jeong1, weights = NA), na.rm = TRUE)
 ```
 
 ### Network 12: Jeong et al. 2023
@@ -398,22 +398,22 @@ head(edges_jeong_h_type)
 # Source and target are the connected bacterial genera
 # Weight is the SparCC R-value
 # Sign indicates whether the association is positive or negative
-g_jeong_h_type <- graph_from_data_frame(d = edges_jeong_h_type[,c("source","target", "weight", "sign")], directed = FALSE)
+net_jeong2 <- graph_from_data_frame(d = edges_jeong_h_type[,c("source","target", "weight", "sign")], directed = FALSE)
 
 # Count nodes
-vcount(g_jeong_h_type)
+vcount(net_jeong2)
 
 # Count edges
-ecount(g_jeong_h_type)
+ecount(net_jeong2)
 
 # Plot network
-plot(g_jeong_h_type, vertex.label = NA, vertex.size = 5)
+plot(net_jeong2, vertex.label = NA, vertex.size = 5)
 
 # Degree
-d12 <- mean(degree(g_jeong_h_type))
+d12 <- mean(degree(net_jeong2))
 
 # Closeness
-c12 <- mean(closeness(g_jeong_h_type, weights = NA), na.rm = TRUE)
+c12 <- mean(closeness(net_jeong2, weights = NA), na.rm = TRUE)
 ```
 
 ### Network 13: Goyal et al. 2021 (Not considering as labels only include microbe IDs)
@@ -487,13 +487,6 @@ d15 <- mean(degree(net_lugo_martinez))
 # Closeness
 c15 <- mean(closeness(net_lugo_martinez, weights = NA), na.rm = TRUE)
 ```
-
-### Network 17: Melnyk et al. 2020
-
-```{r}
-
-```
-
 
 ### Network 18: Ruiz-Perez et al. 2021
 
@@ -588,22 +581,22 @@ crc_edges <- data.frame(bacteria1 = sub("<-->.*", "", crc_data[[1]]),
                         weight = crc_data[[2]])
 
 # Create network
-net_loftus_crc <- graph_from_data_frame(crc_edges, directed = FALSE)
+net_loftus1 <- graph_from_data_frame(crc_edges, directed = FALSE)
 
 # Count nodes
-vcount(net_loftus_crc)
+vcount(net_loftus1)
 
 # Count edges
-ecount(net_loftus_crc)
+ecount(net_loftus1)
 
 # Plot network
-plot(net_loftus_crc, vertex.label = NA, vertex.size = 5)
+plot(net_loftus1, vertex.label = NA, vertex.size = 5)
 
 # Degree
-d20 <- mean(degree(net_loftus_crc))
+d20 <- mean(degree(net_loftus1))
 
 # Closeness
-c20 <- mean(closeness(net_loftus_crc, weights = NA), na.rm = TRUE)
+c20 <- mean(closeness(net_loftus1, weights = NA), na.rm = TRUE)
 ```
 
 ### Network 21: Loftus et al. 2021
@@ -626,22 +619,22 @@ healthy_edges <- data.frame(bacteria1 = sub("<-->.*", "", healthy_data[[1]]),
                             weight = healthy_data[[2]])
 
 # Create network
-net_loftus_healthy <- graph_from_data_frame(healthy_edges, directed = FALSE)
+net_loftus2 <- graph_from_data_frame(healthy_edges, directed = FALSE)
 
 # Count nodes
-vcount(net_loftus_healthy)
+vcount(net_loftus2)
 
 # Count edges
-ecount(net_loftus_healthy)
+ecount(net_loftus2)
 
 # Plot network
-plot(net_loftus_healthy, vertex.label = NA, vertex.size = 5)
+plot(net_loftus2, vertex.label = NA, vertex.size = 5)
 
 # Degree
-d21 <- mean(degree(net_loftus_healthy))
+d21 <- mean(degree(net_loftus2))
 
 # Closeness
-c21 <- mean(closeness(net_loftus_healthy, weights = NA), na.rm = TRUE)
+c21 <- mean(closeness(net_loftus2, weights = NA), na.rm = TRUE)
 ```
 
 ### Network 22: Ravikrishnan et al. 2021
@@ -662,22 +655,22 @@ dmem_data <- read.table("data/22-ravikrishnan/edges_msi_benefit_dmem_withedgeval
 dmem_edges <- data.frame(from = dmem_data[[2]], to = dmem_data[[1]],weight = dmem_data[[3]])
 
 # Create directed network
-net_ravikrishnan_dmem <- graph_from_data_frame(dmem_edges, directed = TRUE)
+net_ravikrishnan1 <- graph_from_data_frame(dmem_edges, directed = TRUE)
 
 # Count nodes
-vcount(net_ravikrishnan_dmem)
+vcount(net_ravikrishnan1)
 
 # Count edges
-ecount(net_ravikrishnan_dmem)
+ecount(net_ravikrishnan1)
 
 # Plot network
-plot(net_ravikrishnan_dmem, vertex.label = NA, vertex.size = 5)
+plot(net_ravikrishnan1, vertex.label = NA, vertex.size = 5)
 
 # Degree
-d22 <- mean(degree(net_ravikrishnan_dmem))
+d22 <- mean(degree(net_ravikrishnan1))
 
 # Closeness
-c22 <- mean(closeness(net_ravikrishnan_dmem, weights = NA), na.rm = TRUE)
+c22 <- mean(closeness(net_ravikrishnan1, weights = NA), na.rm = TRUE)
 ```
 
 ## Network 23: Ravikrishnan et al. 2021
@@ -698,22 +691,22 @@ hf_data <- read.table("data/23-ravikrishnan/edges_msi_benefit_hf_withedgeval.txt
 hf_edges <- data.frame(from = hf_data[[2]], to = hf_data[[1]], weight = hf_data[[3]])
 
 # Create directed network
-net_ravikrishnan_hf <- graph_from_data_frame(hf_edges, directed = TRUE)
+net_ravikrishnan2 <- graph_from_data_frame(hf_edges, directed = TRUE)
 
 # Count nodes
-vcount(net_ravikrishnan_hf)
+vcount(net_ravikrishnan2)
 
 # Count edges
-ecount(net_ravikrishnan_hf)
+ecount(net_ravikrishnan2)
 
 # Plot network
-plot(net_ravikrishnan_hf, vertex.label = NA, vertex.size = 5)
+plot(net_ravikrishnan2, vertex.label = NA, vertex.size = 5)
 
 # Degree
-d23 <- mean(degree(net_ravikrishnan_hf))
+d23 <- mean(degree(net_ravikrishnan2))
 
 # Closeness
-c23 <- mean(closeness(net_ravikrishnan_hf, weights = NA), na.rm = TRUE)
+c23 <- mean(closeness(net_ravikrishnan2, weights = NA), na.rm = TRUE)
 ```
 
 ## Network 27: Li et al. 2019
@@ -734,22 +727,22 @@ healthy_nodes <- read.csv("data/27-li/Nodes_Healthy_Group_withoutC_C1.csv")
 healthy_edges <- read.csv("data/27-li/Edges_Healthy_Group_withoutC_C1.csv")
 
 # Create network
-net_healthy <- graph_from_data_frame(healthy_edges, directed = TRUE, vertices = healthy_nodes)
+net_li1 <- graph_from_data_frame(healthy_edges, directed = TRUE, vertices = healthy_nodes)
 
 # Count nodes
-vcount(net_healthy)
+vcount(net_li1)
 
 # Count edges
-ecount(net_healthy)
+ecount(net_li1)
 
 # Plot network
-plot(net_healthy, vertex.label = NA, vertex.size = 5)
+plot(net_li1, vertex.label = NA, vertex.size = 5)
 
 # Degree
-d27 <- mean(degree(net_healthy))
+d27 <- mean(degree(net_li1))
 
 # Closeness
-c27 <- mean(closeness(net_healthy, weights = NA), na.rm = TRUE)
+c27 <- mean(closeness(net_li1, weights = NA), na.rm = TRUE)
 ```
 
 ## Network 28: Li et al. 2019
@@ -768,22 +761,22 @@ unhealthy_nodes <- read.csv("data/28-li/Nodes_MaxEnt_UnHealthy.csv")
 unhealthy_edges <- read.csv("data/28-li/Edges_MaxEnt_UnHealthy.csv")
 
 # Create network
-net_unhealthy <- graph_from_data_frame(unhealthy_edges, directed = TRUE, vertices = unhealthy_nodes)
+net_li2 <- graph_from_data_frame(unhealthy_edges, directed = TRUE, vertices = unhealthy_nodes)
 
 # Count nodes
-vcount(net_unhealthy)
+vcount(net_li2)
 
 # Count edges
-ecount(net_unhealthy)
+ecount(net_li2)
 
 # Plot network
-plot(net_unhealthy, vertex.label = NA, vertex.size = 5)
+plot(net_li2, vertex.label = NA, vertex.size = 5)
 
 # Degree
-d28 <- mean(degree(net_unhealthy))
+d28 <- mean(degree(net_li2))
 
 # Closeness
-c28 <- mean(closeness(net_unhealthy, weights = NA), na.rm = TRUE)
+c28 <- mean(closeness(net_li2, weights = NA), na.rm = TRUE)
 ```
 
 ## Organizing networks into table
@@ -888,15 +881,15 @@ match_level <- "species"
 
 # igraph objects that should NOT take part in the comparison:
 # - net_goyal: numeric IDs and metabolites
-# - g_hernandez, g_jeong_s_type, g_jeong_h_type: genus-level only
-# - net_healthy, net_unhealthy (Li): nodes are bacterial families
+# - g_hernandez, net_jeong1, net_jeong2: genus-level only
+# - net_li1, net_li2 (Li): nodes are bacterial families
 # - net_lugo_martinez: nodes are bacterial classes plus clinical variables
 # - net_ruiz_perez: full network with genes/metabolites; the taxa-only
 #   version net_ruiz_perez_taxa is used instead
 # - g_steinway: only 9 nodes
 # - g, g_er: leftover helper / model objects, not real networks
-exclude <- c("net_goyal", "g_hernandez", "g_jeong_s_type", "g_jeong_h_type",
-             "net_healthy", "net_unhealthy", "net_lugo_martinez",
+exclude <- c("net_goyal", "g_hernandez", "net_jeong1", "net_jeong2",
+             "net_li1", "net_li2", "net_lugo_martinez",
              "net_ruiz_perez", "g_steinway", "g", "g_er")
 
 # Renamed / synonymous genera, written in lowercase as old = "new".
